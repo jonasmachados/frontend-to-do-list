@@ -1,4 +1,12 @@
-html,body{
-    margin:0;
-    padding:0;
- }
+:root {
+  --primary-color: #6A5ACD;
+  --secondary-color: #483D8B;
+  --background-color: #A9A9A9;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
