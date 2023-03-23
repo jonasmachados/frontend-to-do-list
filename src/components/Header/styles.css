@@ -22,7 +22,7 @@
   color: #ffffff;
   font-size: 30px;
   font-family: cursive;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   border-radius: 15px;
   padding: 10px;
 }
@@ -46,9 +46,9 @@
   align-items: center;
   width: auto;
   height: 100%;
-  opacity: 1;
-  transition: width 1s ease-out;
-  background-color: var(--primary-color);
+  opacity:1;
+  transition: all .5s ease 0s;
+  background-color: var(--secondary-color);
 }
 
 .nav-menu.active li{
