@@ -35,7 +35,7 @@ const ToDoLists = () => {
                 {toDoList.map((toDoList) => (
                     <li className="to-do-list" key={toDoList.id}>
                         <span className="name">{toDoList.name}</span>
-                        <span className="date">{format(parseISO(toDoList.dateInitial), 'dd/MM/yyyy')}</span>
+                        <span className="date">Iniciado em {format(parseISO(toDoList.dateInitial), 'dd/MM/yyyy')}</span>
                     </li>
                 ))}</ol>
 
