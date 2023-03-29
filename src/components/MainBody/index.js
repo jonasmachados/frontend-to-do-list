@@ -1,4 +1,4 @@
-import ImgMain from '../SVG/ImgMain';
+import ImgMain from '../SVGs/ImgMain';
 import './styles.css';
 import ToDoLists from '../ToDoLists';
 

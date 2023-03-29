@@ -1,7 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
 .container-to-do-lists {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   color: #fff;
-  font-size: 60px;
+}
+
+.container-to-do-lists h1 {
+  font-family: "Abril Fatface", cursive;
+  font-size: 45px;
+  font-weight: 100;
+}
+
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.to-do-list {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+  padding: 0.8rem;
+  border-radius: 1rem;
+  background-color: var(--primary-color);
+}
+
+.to-do-list:hover{
+  transform: scale(1.1);
+}
+
+.to-do-list .name {
+  text-transform: capitalize;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.to-do-list .date {
+  font-size: 26px;
+  color: var(--tertiary-color);
+}
+
+@media (min-width: 992px) {
+  .project-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .container-to-do-lists h1 {
+    padding-top: 30px;
+  }
 }
