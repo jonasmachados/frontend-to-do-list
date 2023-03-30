@@ -10,6 +10,11 @@
 @media (min-width: 768px) {
   .container-main-body {
     grid-template-columns: 60% 40%;
-    padding: 80px 0 0 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .container-main-body {
+    padding: 140px 0 40px 0;
   }
 }
