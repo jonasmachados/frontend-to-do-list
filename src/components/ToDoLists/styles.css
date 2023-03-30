@@ -39,12 +39,18 @@
   margin-bottom: 0.5rem;
 }
 
+.to-do-list .icon {
+  font-size: 45px;
+  color: #fff;
+  padding-top: 10px;
+}
+
 .to-do-list .date {
-  font-size: 24px;
+  font-size: 28px;
   color: var(--tertiary-color);
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .project-list {
     grid-template-columns: repeat(3, 1fr);
   }

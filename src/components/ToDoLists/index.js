@@ -29,7 +29,7 @@ const ToDoLists = () => {
             <ol className="project-list">
                 <li className="to-do-list" key={toDoList.id}>
                     <span className="name">Novo projeto</span>
-                    <span className="name"><BsCalendar2Plus /></span>
+                    <span className="icon"><BsCalendar2Plus /></span>
                 </li>
 
                 {toDoList.map((toDoList) => (
