@@ -2,13 +2,13 @@ import ImgMain from '../SVGs/ImgMain';
 import './styles.css';
 import ToDoLists from '../ToDoLists';
 
-const MainBody = () => {
+const Home = () => {
     return (
-        <div className='container-main-body'>
+        <div className='container-home'>
             <ToDoLists />
             <ImgMain />
         </div>
     )
 }
 
-export default MainBody;
+export default Home;

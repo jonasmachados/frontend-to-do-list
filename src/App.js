@@ -1,12 +1,12 @@
 import Footer from './components/Footer';
 import Header from './components/Header';
-import MainBody from './components/MainBody';
+import RouteComponent from './components/Route/RouteComponent';
 
 function App() {
   return (
     <div>
       <Header />
-      <MainBody />
+      <RouteComponent />
       <Footer />
     </div>
   );

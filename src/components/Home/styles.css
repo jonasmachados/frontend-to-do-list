@@ -1,4 +1,4 @@
-.container-main-body {
+.container-home {
   display: grid;
   padding: 100px 0 0 0;
   background-color: #353634;
@@ -8,13 +8,13 @@
 }
 
 @media (min-width: 768px) {
-  .container-main-body {
+  .container-home {
     grid-template-columns: 60% 40%;
   }
 }
 
 @media (min-width: 992px) {
-  .container-main-body {
+  .container-home {
     padding: 140px 0 40px 0;
   }
 }
