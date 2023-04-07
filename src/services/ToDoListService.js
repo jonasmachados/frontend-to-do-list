@@ -8,6 +8,10 @@ class ToDoListService {
         return axios.get(TODO_LIST_API_BASE_URL);
     }
 
+    getToDoListsById(toDoListId){
+        return axios.get(TODO_LIST_API_BASE_URL + '/' + toDoListId);
+    }
+
 }
 
 export default new ToDoListService()
