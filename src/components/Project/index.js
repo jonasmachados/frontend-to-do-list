@@ -25,9 +25,15 @@ const Project = () => {
     const dat = '2011-06-15T00:00:00';
     return (
         <div className='container-project'>
-            <h1>Começe a organizar suas tarefas agora mesmo!</h1>
+            <h1>Mantenha o controle da sua rotina de maneira simples e organizada!!</h1>
 
             <h2>{name} : {format(parseISO(dat), "dd/MM/yyyy")}</h2>
+
+            <ul className='menu-task'>
+                <li className='NOT_STARTED'><a>Not Started</a></li>
+                <li className='IN_PROGRESS'><a>In Progress</a></li>
+                <li className='COMPLETED'><a>Completed</a></li>
+            </ul>
 
             <ol className="task-list">
 
@@ -37,7 +43,7 @@ const Project = () => {
                 </li>
 
                 {listTasks && listTasks.map((index) => (
-                    <li className="box-list" key={index.id}>
+                    <li className={`box-list ${index.taskStatus}`} key={index.id}>
                         <span className="title">{index.title}</span>
                         <span className="dateInitial">Iniciado em: {format(parseISO(index.dateInitial), "dd/MM/yyyy")}</span>
                         <span className="taskStatus">Status: {index.taskStatus}</span>

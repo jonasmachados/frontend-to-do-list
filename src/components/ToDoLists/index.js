@@ -24,7 +24,7 @@ const ToDoLists = () => {
 
     return (
         <div className="container-to-do-lists">
-            <h1>Começe a organizar suas tarefas agora mesmo!</h1>
+            <h1>Visualize todas as suas tarefas em um só lugar e adicione novas facilmente com apenas um clique.</h1>
 
             <ol className="project-list">
                 <li className="to-do-list" key={toDoList.id}>
