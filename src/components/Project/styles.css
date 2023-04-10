@@ -92,19 +92,19 @@
 
 .box-list .dateInitial {
   font-size: 22px;
-  color: #888686;
+  color: var(--primary-color);
   padding-bottom: 10px;
 }
 
 .box-list .taskStatus {
   font-size: 22px;
-  color: var(--tertiary-color);
+  color: var(--primary-color);
   padding-bottom: 10px;
 }
 
 .box-list .content {
   font-size: 22px;
-  color: var(--tertiary-color);
+  color: var(--primary-color);
 }
 
 @media (min-width: 573px) {

@@ -45,9 +45,9 @@ const Project = () => {
                 {listTasks && listTasks.map((index) => (
                     <li className={`box-list ${index.taskStatus}`} key={index.id}>
                         <span className="title">{index.title}</span>
-                        <span className="dateInitial">Iniciado em: {format(parseISO(index.dateInitial), "dd/MM/yyyy")}</span>
-                        <span className="taskStatus">Status: {index.taskStatus}</span>
-                        <span className="content">Comentatios: {index.content}</span>
+                        <span className="dateInitial"><span style={{color: '#fff'}}>Iniciado em: </span> {format(parseISO(index.dateInitial), "dd/MM/yyyy")}</span>
+                        <span className="taskStatus"><span style={{color: '#fff'}}>Status:  </span>{index.taskStatus}</span>
+                        <span className="content"><span style={{color: '#fff'}}>Comentatios: </span> {index.content}</span>
                     </li>
                 ))}</ol>
 
