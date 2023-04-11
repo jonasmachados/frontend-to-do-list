@@ -14,4 +14,6 @@ class ToDoListService {
 
 }
 
-export default new ToDoListService()
+const toDoListService = new ToDoListService();
+
+export default toDoListService;
