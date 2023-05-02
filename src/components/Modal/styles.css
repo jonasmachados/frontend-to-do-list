@@ -45,6 +45,7 @@
 
 .modal-body input[type="text"],
 .modal-body input[type="date"],
+.modal-body select,
 .modal-body textarea {
   padding: 10px;
   font-size: 20px;
@@ -52,6 +53,7 @@
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
   border-radius: 1rem;
+  margin-bottom: 10px;
 }
 
 .modal-body input[type="text"]:focus,

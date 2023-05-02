@@ -19,7 +19,10 @@ class ToDoListService {
     updateToDoList(toDoListId, toDoList){ 
         return axios.put(TODO_LIST_API_BASE_URL + '/' + toDoListId, toDoList);
     }
-
+ 
+    addTaskToList(toDoListId, taskData){
+        return axios.post(TODO_LIST_API_BASE_URL + '/' + toDoListId + '/tasks', taskData);
+    }
 }
 
 const toDoListService = new ToDoListService();
