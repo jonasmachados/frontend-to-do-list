@@ -6,6 +6,20 @@ import moment from 'moment';
 import { BsCalendar2Plus } from "react-icons/bs";
 import ModalComponent from "../Modal/ModalComponent";
 import toDoListService from '../../services/ToDoListService';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+    title: yup
+        .string()
+        .required("Erro: Necessário preencher o titulo!")
+        .min(3, "Erro: O titulo deve ter mais que 3 caracteres!")
+        .max(50, "Erro: O titulo deve ter menos que 50 caracteres!"),
+    content: yup
+        .string()
+        .required("Erro: Necessário preencher o conteúdo!")
+        .min(3, "Erro: O conteúdo do projeto deve ter mais que 3 caracteres!")
+        .max(500, "Erro: O conteúdo do projeto deve ter menos que 50 caracteres!")
+});
 
 const Project = () => {
 
@@ -16,18 +30,48 @@ const Project = () => {
     const [listTasks, setListTasks] = useState('')
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
-    const [taskStatus, setTaskStatus] = useState('')
+    const [taskStatus, setTaskStatus] = useState('NOT_STARTED')
     const [showModal, setShowModal] = useState(false);
+    const [titleError, setTitleError] = useState("");
+    const [contentError, setContentError] = useState("");
 
     const formattedDate = moment(dateInitial).format('DD/MM/YYYY');
+   
+    const newTask = { title, content, taskStatus, dateInitial: new Date().toISOString() };
+
+    async function validate() {
+        try {
+            await schema.validate(newTask, { abortEarly: false });
+            setTitleError("");
+            setContentError("");
+            return true;
+        } catch (err) {
+            err.inner.forEach((e) => {
+                if (e.path === "title") setTitleError(e.message);
+                if (e.path === "content") setContentError(e.message);
+            });
+            return false;
+        }
+    }
+
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+        setTitleError("");
+    };
+
+    const handleContentChange = (event) => {
+        setContent(event.target.value);
+        setContentError("");
+    };
+
 
     const handleCloseModal = () => setShowModal(false);
     const handleShowModal = () => setShowModal(true);
     const handleSaveModal = async (e) => {
 
         e.preventDefault();
-        const dateInitial = new Date().toISOString();
-        const newTask = { title, content, taskStatus, dateInitial };
+
+        if (!(await validate())) return;
 
         toDoListService.addTaskToList(id, newTask).then((response) => {
             setListTasks([...listTasks, response.data]);
@@ -35,6 +79,8 @@ const Project = () => {
             console.log(error)
         })
 
+        setTitle('');
+        setContent('');
         handleCloseModal();
     };
 
@@ -81,9 +127,10 @@ const Project = () => {
                                     placeholder="Titlo"
                                     name="title"
                                     value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                >
+                                    onChange={handleTitleChange}                                >
                                 </input>
+                                {titleError && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0"}}>{titleError}</p>}
+
                             </div>
 
                             <div>
@@ -92,9 +139,11 @@ const Project = () => {
                                     placeholder="Conteúdo"
                                     name="content"
                                     value={content}
-                                    onChange={(e) => setContent(e.target.value)}
+                                    onChange={handleContentChange}
                                 >
                                 </input>
+                                {contentError && <p style={{ color: "#ff0000", fontSize: "20px", margin: "0 0 30px 0" }}>{contentError}</p>}
+
                             </div>
 
                             <div>
