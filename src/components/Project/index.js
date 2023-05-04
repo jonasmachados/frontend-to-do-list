@@ -4,9 +4,11 @@ import "./styles.css"
 import ToDoListService from '../../services/ToDoListService'
 import moment from 'moment';
 import { BsCalendar2Plus } from "react-icons/bs";
+import { AiFillEdit } from "react-icons/ai";
 import ModalComponent from "../Modal/ModalComponent";
 import toDoListService from '../../services/ToDoListService';
 import * as yup from 'yup';
+import EditToDoModal from '../Modal/EditToDoModal';
 
 const schema = yup.object().shape({
     title: yup
@@ -32,11 +34,12 @@ const Project = () => {
     const [content, setContent] = useState('')
     const [taskStatus, setTaskStatus] = useState('NOT_STARTED')
     const [showModal, setShowModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
 
     const formattedDate = moment(dateInitial).format('DD/MM/YYYY');
-   
+
     const newTask = { title, content, taskStatus, dateInitial: new Date().toISOString() };
 
     async function validate() {
@@ -84,6 +87,10 @@ const Project = () => {
         handleCloseModal();
     };
 
+    const handleCloseEditModal = () => setShowEditModal(false);
+    const handleShowEditModal = () => setShowEditModal(true);
+
+
     useEffect(() => {
         ToDoListService.getToDoListsById(id).then((response) => {
             setName(response.data.name)
@@ -99,7 +106,21 @@ const Project = () => {
         <div className='container-project'>
             <h1>Mantenha o controle da sua rotina de maneira simples e organizada!!</h1>
 
-            <h2>{name} : {formattedDate}</h2>
+            <h2>{name} : {formattedDate}
+                <button
+                    style={{ backgroundColor: "var(--primary-color)", marginLeft: "10px", borderRadius: "5px" }}
+                    onClick={handleShowEditModal}
+                >
+                    <AiFillEdit color="var(--secondary-color)" fontSize="1.5em" />
+                </button>
+                <EditToDoModal
+                    show={showEditModal}
+                    handleClose={handleCloseEditModal}
+                    id={id}
+                    name={name}
+                    setName={setName}
+                />
+            </h2>
 
             <ul className='menu-task'>
                 <li className='NOT_STARTED'>Not Started</li>
@@ -129,7 +150,7 @@ const Project = () => {
                                     value={title}
                                     onChange={handleTitleChange}                                >
                                 </input>
-                                {titleError && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0"}}>{titleError}</p>}
+                                {titleError && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{titleError}</p>}
 
                             </div>
 
