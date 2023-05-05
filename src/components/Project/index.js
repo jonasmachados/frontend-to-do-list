@@ -34,7 +34,7 @@ const Project = () => {
     const [content, setContent] = useState('')
     const [taskStatus, setTaskStatus] = useState('NOT_STARTED')
     const [showModal, setShowModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    const [showEditToDoModal, setShowEditToDoModal] = useState(false);
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
 
@@ -87,8 +87,8 @@ const Project = () => {
         handleCloseModal();
     };
 
-    const handleCloseEditModal = () => setShowEditModal(false);
-    const handleShowEditModal = () => setShowEditModal(true);
+    const handleCloseEditModal = () => setShowEditToDoModal(false);
+    const handleShowEditToDoModal = () => setShowEditToDoModal(true);
 
 
     useEffect(() => {
@@ -109,12 +109,12 @@ const Project = () => {
             <h2>{name} : {formattedDate}
                 <button
                     style={{ backgroundColor: "var(--primary-color)", marginLeft: "10px", borderRadius: "5px" }}
-                    onClick={handleShowEditModal}
+                    onClick={handleShowEditToDoModal}
                 >
                     <AiFillEdit color="var(--secondary-color)" fontSize="1.5em" />
                 </button>
                 <EditToDoModal
-                    show={showEditModal}
+                    show={showEditToDoModal}
                     handleClose={handleCloseEditModal}
                     id={id}
                     name={name}
