@@ -9,6 +9,7 @@ import ModalComponent from "../Modal/ModalComponent";
 import toDoListService from '../../services/ToDoListService';
 import * as yup from 'yup';
 import EditToDoModal from '../Modal/EditToDoModal';
+import EditTaskModal from '../Modal/EditTaskModal';
 
 const schema = yup.object().shape({
     title: yup
@@ -29,14 +30,16 @@ const Project = () => {
 
     const [name, setName] = useState('')
     const [dateInitial, setDateInitial] = useState('')
-    const [listTasks, setListTasks] = useState('')
+    const [listTasks, setListTasks] = useState([]);
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [taskStatus, setTaskStatus] = useState('NOT_STARTED')
     const [showModal, setShowModal] = useState(false);
     const [showEditToDoModal, setShowEditToDoModal] = useState(false);
+    const [showEditTaskModal, setShowEditTaskModal] = useState(false);
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
+    const [selectedTask, setSelectedTask] = useState(null);
 
     const formattedDate = moment(dateInitial).format('DD/MM/YYYY');
 
@@ -90,7 +93,19 @@ const Project = () => {
     const handleCloseEditModal = () => setShowEditToDoModal(false);
     const handleShowEditToDoModal = () => setShowEditToDoModal(true);
 
+    const handleCloseEditTaskModal = () => setShowEditTaskModal(false);
+    const handleShowEditTaskModal = (task) => {
+        setSelectedTask(task);
+        setShowEditTaskModal(true);
+    }
 
+    const updateListTasks = (updatedTask) => {
+        const updatedTasks = listTasks
+          .map((task) => task.id === updatedTask.id ? updatedTask : task)
+          .sort((a, b) => b.taskStatus.localeCompare(a.taskStatus, undefined, {order: ['COMPLETED', 'IN_PROGRESS', 'NOT_STARTED']}));
+        setListTasks(updatedTasks);
+      };
+      
     useEffect(() => {
         ToDoListService.getToDoListsById(id).then((response) => {
             setName(response.data.name)
@@ -185,13 +200,22 @@ const Project = () => {
                 />
 
                 {listTasks && listTasks.map((index) => (
-                    <li className={`box-list ${index.taskStatus}`} key={index.id}>
+                    <li className={`box-list ${index.taskStatus}`} key={index.id} onClick={() => handleShowEditTaskModal(index)}>
                         <span className="title">{index.title}</span>
                         <span className="dateInitial"><span style={{ color: '#fff' }}>Iniciado em: </span> {moment(index.dateInitial).format('DD/MM/YYYY')}</span>
                         <span className="taskStatus"><span style={{ color: '#fff' }}>Status:  </span>{index.taskStatus}</span>
                         <span className="content"><span style={{ color: '#fff' }}>Comentatios: </span> {index.content}</span>
                     </li>
-                ))}</ol>
+                ))}
+                {selectedTask && (
+                    <EditTaskModal
+                        show={showEditTaskModal}
+                        handleClose={handleCloseEditTaskModal}
+                        task={selectedTask}
+                        updateListTasks={updateListTasks}
+                    />)}
+                    
+            </ol>
 
         </div>
     )
