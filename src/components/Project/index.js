@@ -1,94 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import "./styles.css"
-import ToDoListService from '../../services/ToDoListService'
+import "./styles.css";
+import ToDoListService from '../../services/ToDoListService';
 import moment from 'moment';
 import { BsCalendar2Plus } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
-import ModalComponent from "../Modal/ModalComponent";
-import toDoListService from '../../services/ToDoListService';
-import * as yup from 'yup';
 import EditToDoModal from '../Modal/EditToDoModal';
 import EditTaskModal from '../Modal/EditTaskModal';
-
-const schema = yup.object().shape({
-    title: yup
-        .string()
-        .required("Erro: Necessário preencher o titulo!")
-        .min(3, "Erro: O titulo deve ter mais que 3 caracteres!")
-        .max(50, "Erro: O titulo deve ter menos que 50 caracteres!"),
-    content: yup
-        .string()
-        .required("Erro: Necessário preencher o conteúdo!")
-        .min(3, "Erro: O conteúdo do projeto deve ter mais que 3 caracteres!")
-        .max(500, "Erro: O conteúdo do projeto deve ter menos que 50 caracteres!")
-});
+import NewTaskModal from '../Modal/NewTaskModal';
 
 const Project = () => {
 
     const { id } = useParams();
 
-    const [name, setName] = useState('')
-    const [dateInitial, setDateInitial] = useState('')
+    const [name, setName] = useState('');
+    const [dateInitial, setDateInitial] = useState('');
     const [listTasks, setListTasks] = useState([]);
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
-    const [taskStatus, setTaskStatus] = useState('NOT_STARTED')
-    const [showModal, setShowModal] = useState(false);
+    const [showNewTaskModal, setShowNewTaskModal] = useState(false);
     const [showEditToDoModal, setShowEditToDoModal] = useState(false);
     const [showEditTaskModal, setShowEditTaskModal] = useState(false);
-    const [titleError, setTitleError] = useState("");
-    const [contentError, setContentError] = useState("");
     const [selectedTask, setSelectedTask] = useState(null);
 
     const formattedDate = moment(dateInitial).format('DD/MM/YYYY');
 
-    const newTask = { title, content, taskStatus, dateInitial: new Date().toISOString() };
-
-    async function validate() {
-        try {
-            await schema.validate(newTask, { abortEarly: false });
-            setTitleError("");
-            setContentError("");
-            return true;
-        } catch (err) {
-            err.inner.forEach((e) => {
-                if (e.path === "title") setTitleError(e.message);
-                if (e.path === "content") setContentError(e.message);
-            });
-            return false;
-        }
-    }
-
-    const handleTitleChange = (event) => {
-        setTitle(event.target.value);
-        setTitleError("");
-    };
-
-    const handleContentChange = (event) => {
-        setContent(event.target.value);
-        setContentError("");
-    };
-
-
-    const handleCloseModal = () => setShowModal(false);
-    const handleShowModal = () => setShowModal(true);
-    const handleSaveModal = async (e) => {
-
-        e.preventDefault();
-
-        if (!(await validate())) return;
-
-        toDoListService.addTaskToList(id, newTask).then((response) => {
-            setListTasks([...listTasks, response.data]);
-        }).catch(error => {
-            console.log(error)
-        })
-
-        setTitle('');
-        setContent('');
-        handleCloseModal();
-    };
+    const handleCloseNewTaskModal = () => setShowNewTaskModal(false);
+    const handleShowNewTaskModal = () => setShowNewTaskModal(true);
 
     const handleCloseEditModal = () => setShowEditToDoModal(false);
     const handleShowEditToDoModal = () => setShowEditToDoModal(true);
@@ -101,11 +37,11 @@ const Project = () => {
 
     const updateListTasks = (updatedTask) => {
         const updatedTasks = listTasks
-          .map((task) => task.id === updatedTask.id ? updatedTask : task)
-          .sort((a, b) => b.taskStatus.localeCompare(a.taskStatus, undefined, {order: ['COMPLETED', 'IN_PROGRESS', 'NOT_STARTED']}));
-        setListTasks(updatedTasks);
-      };
-      
+            .map((task) => task.id === updatedTask.id ? updatedTask : task)
+            .sort((a, b) => b.taskStatus.localeCompare(a.taskStatus, undefined, { order: ['COMPLETED', 'IN_PROGRESS', 'NOT_STARTED'] }));
+            setListTasks(updatedTasks);
+    };
+
     useEffect(() => {
         ToDoListService.getToDoListsById(id).then((response) => {
             setName(response.data.name)
@@ -145,58 +81,16 @@ const Project = () => {
 
             <ol className="task-list overlay">
 
-                <li className="box-list main" variant="primary" onClick={handleShowModal}>
+                <li className="box-list main" variant="primary" onClick={handleShowNewTaskModal}>
                     <span className="name">Nova tarefa</span>
                     <span className="icon"><BsCalendar2Plus /></span>
                 </li>
-                <ModalComponent
-                    show={showModal}
-                    handleClose={handleCloseModal}
-                    handleSave={handleSaveModal}
-                    title="Novo Projeto"
-                    backdropClassName="custom-backdrop"
-                    body={
-                        <div>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Titlo"
-                                    name="title"
-                                    value={title}
-                                    onChange={handleTitleChange}                                >
-                                </input>
-                                {titleError && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{titleError}</p>}
-
-                            </div>
-
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Conteúdo"
-                                    name="content"
-                                    value={content}
-                                    onChange={handleContentChange}
-                                >
-                                </input>
-                                {contentError && <p style={{ color: "#ff0000", fontSize: "20px", margin: "0 0 30px 0" }}>{contentError}</p>}
-
-                            </div>
-
-                            <div>
-                                <select
-                                    name="taskStatus"
-                                    value={taskStatus}
-                                    onChange={(e) => setTaskStatus(e.target.value)}
-                                    className="menu-select"
-                                >
-                                    <option value="NOT_STARTED">Not Started</option>
-                                    <option value="IN_PROGRESS">In Progress</option>
-                                    <option value="COMPLETED">Completed</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    }
+                <NewTaskModal
+                    show={showNewTaskModal}
+                    handleClose={handleCloseNewTaskModal}
+                    id={id}
+                    listTasks={listTasks}
+                    setListTasks={setListTasks}
                 />
 
                 {listTasks && listTasks.map((index) => (
@@ -214,7 +108,7 @@ const Project = () => {
                         task={selectedTask}
                         updateListTasks={updateListTasks}
                     />)}
-                    
+
             </ol>
 
         </div>
