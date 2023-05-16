@@ -5,7 +5,7 @@ import ToDoListService from '../../services/ToDoListService';
 import moment from 'moment';
 import { BsCalendar2Plus } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
-import EditToDoModal from '../Modal/EditToDoModal';
+import ToDoModal from '../Modal/ToDoModal';
 import EditTaskModal from '../Modal/EditTaskModal';
 import NewTaskModal from '../Modal/NewTaskModal';
 
@@ -17,7 +17,7 @@ const Project = () => {
     const [dateInitial, setDateInitial] = useState('');
     const [listTasks, setListTasks] = useState([]);
     const [showNewTaskModal, setShowNewTaskModal] = useState(false);
-    const [showEditToDoModal, setShowEditToDoModal] = useState(false);
+    const [showToDoModal, setShowToDoModal] = useState(false);
     const [showEditTaskModal, setShowEditTaskModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
 
@@ -26,8 +26,8 @@ const Project = () => {
     const handleCloseNewTaskModal = () => setShowNewTaskModal(false);
     const handleShowNewTaskModal = () => setShowNewTaskModal(true);
 
-    const handleCloseEditModal = () => setShowEditToDoModal(false);
-    const handleShowEditToDoModal = () => setShowEditToDoModal(true);
+    const handleCloseToDoModal = () => setShowToDoModal(false);
+    const handleShowToDoModal = () => setShowToDoModal(true);
 
     const handleCloseEditTaskModal = () => setShowEditTaskModal(false);
     const handleShowEditTaskModal = (task) => {
@@ -60,13 +60,13 @@ const Project = () => {
             <h2>{name} : {formattedDate}
                 <button
                     style={{ backgroundColor: "var(--primary-color)", marginLeft: "10px", borderRadius: "5px" }}
-                    onClick={handleShowEditToDoModal}
+                    onClick={handleShowToDoModal}
                 >
                     <AiFillEdit color="var(--secondary-color)" fontSize="1.5em" />
                 </button>
-                <EditToDoModal
-                    show={showEditToDoModal}
-                    handleClose={handleCloseEditModal}
+                <ToDoModal
+                    show={showToDoModal}
+                    handleClose={handleCloseToDoModal}
                     id={id}
                     name={name}
                     setName={setName}
