@@ -1,35 +1,47 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ModalComponent from './ModalComponent';
 import ToDoListService from '../../services/ToDoListService';
+import { validateToDoList } from '../../validations/validateToDoList';
 import "./styles.css";
 
 const ToDoModal = ({ show, handleClose, id, name, setName }) => {
   const [newName, setNewName] = useState(name || '');
+  const [errors, setErrors] = useState({ name: '' })
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
+    setErrors({ ...errors, name: '' });
   };
 
-  const handleAddOrUpdate = () => {
-    const toDoList = { name: newName, dateInitial: new Date().toISOString() };
+  const handleAddOrUpdateToDoList = async () => {
+    const toDoList = {
+      name: newName,
+      dateInitial: new Date().toISOString()
+    };
 
-    if (id) {
-      ToDoListService.updateToDoList(id, { name: newName })
-        .then((response) => {
-          setName(response.data.name);
-          handleClose();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    const validationResult = await validateToDoList(toDoList);
+
+    if (validationResult.isValid) {
+      if (id) {
+        ToDoListService.updateToDoList(id, { name: newName })
+          .then((response) => {
+            setName(response.data.name);
+            handleClose();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        ToDoListService.createToDoList(toDoList)
+          .then((response) => {
+            window.location.href = `/project/${response.data.id}`;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     } else {
-      ToDoListService.createToDoList(toDoList)
-        .then((response) => {
-          window.location.href = `/project/${response.data.id}`;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      setErrors(validationResult.errors);
     }
   };
 
@@ -43,7 +55,7 @@ const ToDoModal = ({ show, handleClose, id, name, setName }) => {
     <ModalComponent
       show={show}
       handleClose={handleClose}
-      handleSave={handleAddOrUpdate}
+      handleSave={handleAddOrUpdateToDoList}
       title={id ? <p>Atualizar Projeto</p> : <p>Novo Projeto</p>}
       body={
         <div>
@@ -54,6 +66,8 @@ const ToDoModal = ({ show, handleClose, id, name, setName }) => {
             value={newName}
             onChange={handleNameChange}
           />
+          {errors.name && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{errors.name}</p>}
+
         </div>
       }
     />
