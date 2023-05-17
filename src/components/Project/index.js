@@ -6,8 +6,7 @@ import moment from 'moment';
 import { BsCalendar2Plus } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 import ToDoModal from '../Modal/ToDoModal';
-import EditTaskModal from '../Modal/EditTaskModal';
-import NewTaskModal from '../Modal/NewTaskModal';
+import TaskModal from '../Modal/TaskModal';
 
 const Project = () => {
 
@@ -16,31 +15,27 @@ const Project = () => {
     const [name, setName] = useState('');
     const [dateInitial, setDateInitial] = useState('');
     const [listTasks, setListTasks] = useState([]);
-    const [showNewTaskModal, setShowNewTaskModal] = useState(false);
+    const [showTaskModal, setShowTaskModal] = useState(false);
     const [showToDoModal, setShowToDoModal] = useState(false);
-    const [showEditTaskModal, setShowEditTaskModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
 
     const formattedDate = moment(dateInitial).format('DD/MM/YYYY');
 
-    const handleCloseNewTaskModal = () => setShowNewTaskModal(false);
-    const handleShowNewTaskModal = () => setShowNewTaskModal(true);
-
+    const handleCloseTaskModal = () => setShowTaskModal(false);
+    const handleShowTaskModal = (task) => {
+        setSelectedTask(task);
+        setShowTaskModal(true);
+    };
     const handleCloseToDoModal = () => setShowToDoModal(false);
     const handleShowToDoModal = () => setShowToDoModal(true);
 
-    const handleCloseEditTaskModal = () => setShowEditTaskModal(false);
-    const handleShowEditTaskModal = (task) => {
-        setSelectedTask(task);
-        setShowEditTaskModal(true);
-    }
-
-    const updateListTasks = (updatedTask) => {
-        const updatedTasks = listTasks
-            .map((task) => task.id === updatedTask.id ? updatedTask : task)
-            .sort((a, b) => b.taskStatus.localeCompare(a.taskStatus, undefined, { order: ['COMPLETED', 'IN_PROGRESS', 'NOT_STARTED'] }));
-            setListTasks(updatedTasks);
-    };
+    const updateListTasks = (tasks) => {
+        return tasks.sort((a, b) =>
+          b.taskStatus.localeCompare(a.taskStatus, undefined, {
+            order: ["COMPLETED", "IN_PROGRESS", "NOT_STARTED"],
+          })
+        );
+      };
 
     useEffect(() => {
         ToDoListService.getToDoListsById(id).then((response) => {
@@ -81,32 +76,28 @@ const Project = () => {
 
             <ol className="task-list overlay">
 
-                <li className="box-list main" variant="primary" onClick={handleShowNewTaskModal}>
+                <li className="box-list main" variant="primary" onClick={handleShowTaskModal}>
                     <span className="name">Nova tarefa</span>
                     <span className="icon"><BsCalendar2Plus /></span>
                 </li>
-                <NewTaskModal
-                    show={showNewTaskModal}
-                    handleClose={handleCloseNewTaskModal}
-                    id={id}
-                    listTasks={listTasks}
-                    setListTasks={setListTasks}
-                />
 
                 {listTasks && listTasks.map((index) => (
-                    <li className={`box-list ${index.taskStatus}`} key={index.id} onClick={() => handleShowEditTaskModal(index)}>
+                    <li className={`box-list ${index.taskStatus}`} key={index.id} onClick={() => handleShowTaskModal(index)}>
                         <span className="title">{index.title}</span>
                         <span className="dateInitial"><span style={{ color: '#fff' }}>Iniciado em: </span> {moment(index.dateInitial).format('DD/MM/YYYY')}</span>
-                        <span className="taskStatus"><span style={{ color: '#fff' }}>Status:  </span>{index.taskStatus}</span>
                         <span className="content"><span style={{ color: '#fff' }}>Comentatios: </span> {index.content}</span>
                     </li>
                 ))}
+
                 {selectedTask && (
-                    <EditTaskModal
-                        show={showEditTaskModal}
-                        handleClose={handleCloseEditTaskModal}
+                    <TaskModal
+                        show={showTaskModal}
+                        handleClose={handleCloseTaskModal}
                         task={selectedTask}
+                        projectId={id}
                         updateListTasks={updateListTasks}
+                        listTasks={listTasks}
+                        setListTasks={setListTasks}
                     />)}
 
             </ol>

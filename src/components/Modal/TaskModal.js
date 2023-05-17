@@ -1,38 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import ModalComponent from './ModalComponent';
 import TaskService from '../../services/TaskService';
+import ToDoListService from '../../services/ToDoListService'
 
-const EditTaskModal = ({ show, handleClose, task, updateListTasks }) => {
-    
+const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTasks, setListTasks }) => {
     const [title, setTitle] = useState(task?.title || '');
     const [content, setContent] = useState(task?.content || '');
     const [taskStatus, setTaskStatus] = useState(task?.taskStatus || '');
-    const [dateInitial, setDateInitial] = useState(task?.dateInitial || '');
 
     useEffect(() => {
         setTitle(task?.title || '');
         setContent(task?.content || '');
-        setTaskStatus(task?.taskStatus || '');
-        setDateInitial(task?.dateInitial || '');
+        setTaskStatus(task?.taskStatus || 'NOT_STARTED');
     }, [task]);
 
-    const handleSave = () => {
-        TaskService.updateTask(task.id, { title, content, taskStatus, dateInitial })
-            .then(() => {
+    const handleAddOrUpdateTask = () => {
+        const taskData = {
+            title,
+            content,
+            taskStatus,
+            dateInitial: new Date().toISOString()
+        };
+
+        if (task && task.id) {
+            TaskService.updateTask(task.id, taskData)
+              .then((response) => {
+                const updatedTasks = listTasks.map((t) => (t.id === response.data.id ? response.data : t));
+                const sortedTasks = updateListTasks(updatedTasks);
+                setListTasks(sortedTasks);
                 handleClose();
-                updateListTasks({ id: task.id, title, content, taskStatus, dateInitial });
-            })
-            .catch((error) => {
+              })
+              .catch((error) => {
                 console.log(error);
-            });
+              });
+          } else {
+            ToDoListService.addTaskToList(projectId, taskData)
+              .then((response) => {
+                const updatedTasks = [...listTasks, response.data];
+                const sortedTasks = updateListTasks(updatedTasks);
+                setListTasks(sortedTasks);
+                handleClose();
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+
+        setTitle('');
+        setContent('');
+        setTaskStatus('NOT_STARTED');
+        handleClose();
     };
 
     return (
         <ModalComponent
             show={show}
             handleClose={handleClose}
-            handleSave={handleSave}
-            title="Edite Nome do Projeto"
+            handleSave={handleAddOrUpdateTask}
+            title={task && task.id ? "Atualizar Tarefa" : "Nova Tarefa"}
             body={
                 <div>
                     <div>
@@ -74,5 +99,4 @@ const EditTaskModal = ({ show, handleClose, task, updateListTasks }) => {
     );
 };
 
-
-export default EditTaskModal;
+export default TaskModal;
