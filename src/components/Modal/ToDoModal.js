@@ -58,14 +58,16 @@ const ToDoModal = ({ show, handleClose, id, name, setName }) => {
       handleSave={handleAddOrUpdateToDoList}
       title={id ? <p>Atualizar Projeto</p> : <p>Novo Projeto</p>}
       body={
-        <div>
-          <input
+        <div className="modal-body">
+          <label htmlFor="name">Nome do Projeto:</label>
+          <textarea
             type="text"
-            placeholder="Name"
+            placeholder="Digite o nome do projeto ..."
             name="newName"
             value={newName}
             onChange={handleNameChange}
-          />
+            className="form-field"
+          ></textarea>
           {errors.name && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{errors.name}</p>}
 
         </div>

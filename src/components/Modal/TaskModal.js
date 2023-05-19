@@ -6,7 +6,6 @@ import { validateTask } from '../../validations/validateTask'
 
 const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTasks, setListTasks }) => {
 
-
     // State variables
     const [title, setTitle] = useState(task?.title || '');
     const [content, setContent] = useState(task?.content || '');
@@ -85,47 +84,48 @@ const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTa
             handleSave={handleAddOrUpdateTask}
             title={task && task.id ? "Atualizar Tarefa" : "Nova Tarefa"}
             body={
-                <div>
+                <div className="modal-body">
+
                     {/* Task title input field */}
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Título"
-                            name="title"
-                            value={title}
-                            onChange={handleTitleChange}
-                        />
-                        {titleError.title && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{titleError.title.title}</p>}
-                    </div>
+                    <label htmlFor="title">Título:</label>
+                    <textarea
+                        type="text"
+                        placeholder="Digite o título..."
+                        name="title"
+                        value={title}
+                        onChange={handleTitleChange}
+                        className="form-field"
+                    ></textarea>
+                    {titleError.title && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{titleError.title.title}</p>}
 
                     {/* Task content input field */}
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Conteúdo"
-                            name="content"
-                            value={content}
-                            onChange={handleContentChange}
-                        >
-                        </input>
-                        {contentError.content && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{contentError.content.content}</p>}
-
-                    </div>
+                    <label htmlFor="content">Conteúdo:</label>
+                    <textarea
+                        type="text"
+                        placeholder="Digite o comentario..."
+                        name="content"
+                        value={content}
+                        onChange={handleContentChange}
+                        className="form-field"
+                    ></textarea>
+                    {contentError.content && <p style={{ color: "red", fontSize: "20px", margin: "0 0 30px 0" }}>{contentError.content.content}</p>}
 
                     {/* Task status select menu */}
-                    <div>
-                        <select
-                            name="taskStatus"
-                            value={taskStatus}
-                            onChange={(e) => setTaskStatus(e.target.value)}
-                            className="menu-select"
-                        >
-                            <option value="NOT_STARTED">Not Started</option>
-                            <option value="IN_PROGRESS">In Progress</option>
-                            <option value="COMPLETED">Completed</option>
-                        </select>
-                    </div>
+                    <label htmlFor="taskStatus">Task Status:</label>
+                    <select
+                        name="taskStatus"
+                        value={taskStatus}
+                        onChange={(e) => setTaskStatus(e.target.value)}
+                        className="menu-select"
+                    >
+                        <option value="NOT_STARTED">Not Started</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
+                    </select>
+
+
                 </div>
+
             }
         />
     );
