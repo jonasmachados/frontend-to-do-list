@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const TODO_LIST_API_BASE_URL = process.env.TODO_LIST_API_BASE_URL ?? "http://localhost:8080/toDoLists";
+const TODO_LIST_API_BASE_URL = process.env.REACT_APP_TODO_LIST_API_BASE_URL ?? "http://localhost:8080/toDoLists";
 
 class ToDoListService {
 
