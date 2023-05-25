@@ -9,6 +9,7 @@ Table of Contents
    * [Technologies](#technologies)
    * [Installation](#installation)
    * [Usage](#usage)
+   * [Deployed Website](#deployed-website)
    * [Contributing](#contributing)
    * [License](#license)
    * [Contact](#contact)
@@ -20,6 +21,10 @@ The Frontend To-Do List project is a web application that allows users to manage
 
 The project was developed as a learning exercise to practice frontend development skills. It is a great example of how to use modern frontend technologies to create a functional and visually appealing web application.
 
+![Website Screenshot](./src/assets/img/home.png)
+
+[https://lista-de-tarefas-jonas.netlify.app/](https://lista-de-tarefas-jonas.netlify.app/)
+
 # Technologies
 
 The following technologies were used in this project:
@@ -28,8 +33,10 @@ The following technologies were used in this project:
 * CSS;
 * JavaScript;
 * react.JS;
+* Axios
 * Yarn
 * VS Code
+* Netlify
 
 # Installation
 
@@ -42,6 +49,12 @@ To install and run this project, follow these steps:
 # Usage
 
 To run the project, use the following command: `yarn start`
+
+# Deployed Website
+
+The project is deployed and can be accessed at the following URL:
+
+[https://lista-de-tarefas-jonas.netlify.app/](https://lista-de-tarefas-jonas.netlify.app/)
 
 # Contributing
 
@@ -57,5 +70,3 @@ If you want to contact me, you can reach me at:
 
 * LinkedIn: https://www.linkedin.com/in/jonas-machados/
 * Email: jonasmachado.ti@gmail.com
-
-
