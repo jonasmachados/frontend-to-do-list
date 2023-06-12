@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  align-content: center;
   height: 20vh;
   background: var(--primary-button);
   font-size: 20px;
@@ -14,6 +15,7 @@
   color: var(--primary-color);
   margin-block-start: 0;
   margin-block-end: 0;
+  text-align: center;
 }
 
 .social-icon {

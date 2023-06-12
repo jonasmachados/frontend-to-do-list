@@ -10,6 +10,7 @@
 
 .modal {
   position: fixed;
+  width: 80%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -94,4 +95,10 @@ select {
   color: var(--primary-button);
   background: var(--primary-color);
   cursor: pointer;
+}
+
+@media (min-width: 992px) {
+  .modal {
+    width: 50%; 
+  }
 }

@@ -16,7 +16,8 @@ const Footer = () => {
                     <i><FaLinkedinIn /></i>
                 </a>
             </div>
-            Trabalhando para tornar o mundo um lugar melhor.
+            <p>Trabalhando para tornar o mundo 
+                um lugar melhor.</p>
             <p>Copyright 2023. All Rights Reserved</p>
         </div>
     );
