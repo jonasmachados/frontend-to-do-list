@@ -37,20 +37,23 @@ const ToDoLists = () => {
 
     return (
         <div className="container-to-do-lists">
-            <h1>Visualize todas as suas tarefas em um só lugar e adicione novas facilmente com apenas um clique.</h1>
+            <h1>Visualize todas as suas
+                <span style={{ color: "var(--primary-button)", }}> tarefas </span>
+                em um só lugar e adicione novas facilmente com apenas um clique.
+            </h1>
 
             <ol className="project-list overlay">
-                <li className="to-do-list" variant="primary" onClick={handleShowToDoModal}>
+                <li className="to-do-list primary" variant="primary" onClick={handleShowToDoModal}>
                     <span className="name">Novo projeto</span>
                     <span className="icon"><BsCalendar2Plus /></span>
                 </li>
-                <ToDoModal 
+                <ToDoModal
                     show={showToDoModal}
                     handleClose={handleCloseToDoModal}
                 />
-               
+
                 {toDoList.map((toDoList) => (
-                    <li className="to-do-list" key={toDoList.id} onClick={() => handleClick(toDoList.id)} >
+                    <li className="to-do-list secondary" key={toDoList.id} onClick={() => handleClick(toDoList.id)} >
                         <span className="name">{toDoList.name}</span>
                         <span className="date">Iniciado em {format(parseISO(toDoList.dateInitial), 'dd/MM/yyyy')}</span>
                     </li>

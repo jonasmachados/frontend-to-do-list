@@ -6,14 +6,12 @@ import { validateTask } from '../../validations/validateTask'
 
 const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTasks, setListTasks }) => {
 
-    // State variables
     const [title, setTitle] = useState(task?.title || '');
     const [content, setContent] = useState(task?.content || '');
     const [taskStatus, setTaskStatus] = useState(task?.taskStatus || '');
     const [titleError, setTitleError] = useState({ title: '' })
     const [contentError, setContentError] = useState({ content: '' })
 
-    // Event handlers
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
         setTitleError({ ...titleError, title: '' });
@@ -32,11 +30,9 @@ const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTa
             dateInitial: new Date().toISOString()
         };
 
-        // Validate task data
         const validationResult = await validateTask(taskData);
 
         if (validationResult.isValid) {
-            // Update task
             if (task && task.id) {
                 TaskService.updateTask(task.id, taskData)
                     .then((response) => {
@@ -48,9 +44,7 @@ const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTa
                     .catch((error) => {
                         console.log(error);
                     });
-            }
-            // Add new task
-            else {
+            }else {
                 ToDoListService.addTaskToList(projectId, taskData)
                     .then((response) => {
                         const updatedTasks = [...listTasks, response.data];
@@ -69,7 +63,6 @@ const TaskModal = ({ show, handleClose, task, projectId, updateListTasks, listTa
 
     };
 
-    // Update state variables when task prop changes
     useEffect(() => {
         setTitle(task?.title || '');
         setContent(task?.content || '');

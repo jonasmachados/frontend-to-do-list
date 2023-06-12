@@ -31,11 +31,11 @@ const Project = () => {
 
     const updateListTasks = (tasks) => {
         return tasks.sort((a, b) =>
-          b.taskStatus.localeCompare(a.taskStatus, undefined, {
-            order: ["COMPLETED", "IN_PROGRESS", "NOT_STARTED"],
-          })
+            b.taskStatus.localeCompare(a.taskStatus, undefined, {
+                order: ["COMPLETED", "IN_PROGRESS", "NOT_STARTED"],
+            })
         );
-      };
+    };
 
     useEffect(() => {
         ToDoListService.getToDoListsById(id).then((response) => {
@@ -50,14 +50,18 @@ const Project = () => {
 
     return (
         <div className='container-project'>
-            <h1>Mantenha o controle da sua rotina de maneira simples e organizada!!</h1>
+            <h1>Mantenha o controle da sua rotina de maneira
+                <span style={{ color: "var(--primary-button)", }}> simples </span> e
+                <span style={{ color: "var(--primary-button)", }}> organizada </span>!!
+            </h1>
 
             <h2>{name} : {formattedDate}
                 <button
-                    style={{ backgroundColor: "var(--primary-color)", marginLeft: "10px", borderRadius: "5px" }}
-                    onClick={handleShowToDoModal}
-                >
-                    <AiFillEdit color="var(--secondary-color)" fontSize="1.5em" />
+                    className="button-edit-name"
+                    onClick={handleShowToDoModal}>
+                    <AiFillEdit
+                        color="var(--primary-color)"
+                        fontSize="1.5em" />
                 </button>
                 <ToDoModal
                     show={showToDoModal}
@@ -76,16 +80,22 @@ const Project = () => {
 
             <ol className="task-list overlay">
 
-                <li className="box-list main" variant="primary" onClick={handleShowTaskModal}>
+                <li className="box-list main"
+                    variant="primary"
+                    onClick={handleShowTaskModal}>
                     <span className="name">Nova tarefa</span>
                     <span className="icon"><BsCalendar2Plus /></span>
                 </li>
 
                 {listTasks && listTasks.map((index) => (
-                    <li className={`box-list ${index.taskStatus}`} key={index.id} onClick={() => handleShowTaskModal(index)}>
+                    <li className={`box-list ${index.taskStatus}`}
+                        key={index.id}
+                        onClick={() => handleShowTaskModal(index)}>
                         <span className="title">{index.title}</span>
-                        <span className="dateInitial"><span style={{ color: '#fff' }}>Iniciado em: </span> {moment(index.dateInitial).format('DD/MM/YYYY')}</span>
-                        <span className="content"><span style={{ color: '#fff' }}>Comentatios: </span> {index.content}</span>
+                        <span className="dateInitial">Iniciado em: {moment(index.dateInitial)
+                            .format('DD/MM/YYYY')}
+                        </span>
+                        <span className="content">Comentatios: {index.content}</span>
                     </li>
                 ))}
 

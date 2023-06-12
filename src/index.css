@@ -1,7 +1,9 @@
 :root {
-  --primary-color: #202020;
-  --secondary-color: #f5f4f7;
-  --tertiary-color: #888686;
+  --primary-color: #000000;
+  --text:#fdfcfc;
+  --primary-button: #a3cb9a;
+  --secondary-button: #180c0e;
+  --accent:#5766a8;
 }
 
 html,

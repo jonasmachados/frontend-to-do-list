@@ -2,7 +2,8 @@
 
 .container-to-do-lists {
   text-align: center;
-  color: #fff;
+  color: var(--text);
+  height: 100%;
 }
 
 .container-to-do-lists h1 {
@@ -25,10 +26,18 @@
   margin: 1.5rem;
   padding: 0.8rem;
   border-radius: 1rem;
-  background-color: var(--primary-color);
 }
 
-.to-do-list:hover{
+.to-do-list.primary {
+  background-color: var(--primary-button);
+  color: var(--primary-color);
+}
+
+.to-do-list.secondary {
+  background-color: var(--secondary-button);
+}
+
+.to-do-list:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
@@ -36,20 +45,17 @@
 .to-do-list .name {
   text-transform: capitalize;
   font-size: 28px;
-  color: #fff;
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
 .to-do-list .icon {
   font-size: 45px;
-  color: #fff;
   padding-top: 10px;
 }
 
 .to-do-list .date {
   font-size: 28px;
-  color: var(--tertiary-color);
   font-weight: bold;
 }
 
@@ -60,5 +66,11 @@
 
   .container-to-do-lists h1 {
     padding-top: 30px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container-to-do-lists {
+    height: 100vh;
   }
 }
