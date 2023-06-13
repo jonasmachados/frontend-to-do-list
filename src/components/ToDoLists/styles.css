@@ -24,7 +24,7 @@
 .to-do-list {
   display: flex;
   flex-direction: column;
-  margin: 1.5rem;
+  margin: 10px;
   padding: 0.8rem;
   border-radius: 1rem;
 }
@@ -45,18 +45,18 @@
 
 .to-do-list .name {
   text-transform: capitalize;
-  font-size: 28px;
+  font-size: 26px;
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
 .to-do-list .icon {
-  font-size: 45px;
+  font-size: 35px;
   padding-top: 10px;
 }
 
 .to-do-list .date {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
 }
 
@@ -67,6 +67,19 @@
 
   .container-to-do-lists h1 {
     padding-top: 30px;
+  }
+
+  .to-do-list .name {
+    font-size: 28px;
+  }
+  
+  .to-do-list .icon {
+    font-size: 45px;
+  }
+  
+  .to-do-list .date {
+    font-size: 26px;
+    font-weight: bold;
   }
 }
 

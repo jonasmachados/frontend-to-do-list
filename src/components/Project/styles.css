@@ -20,6 +20,7 @@
   font-family: "Abril Fatface", cursive;
   font-size: 30px;
   font-weight: 100;
+  text-align: center;
 }
 
 .button-edit-name {
@@ -31,6 +32,7 @@
 .button-edit-name:hover {
   transform: scale(1.1);
   cursor: pointer;
+
 }
 
 .menu-task {
@@ -65,6 +67,7 @@
 .box-list:hover {
   transform: scale(1.1);
   cursor: pointer;
+  border: 5px solid var(--text);
 }
 
 .NOT_STARTED {
