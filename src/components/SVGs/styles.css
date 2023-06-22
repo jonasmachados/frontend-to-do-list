@@ -1,7 +1,25 @@
-.svg{
-    display: flex;
-    justify-content: center;
-    align-items: center;  
-    text-align: center;
-    width: 100%;
+.svg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.error-svg {
+  width: 350px;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 992px) {
+  .error-svg {
+    width: 500px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .error-svg {
+    width: 600px;
+  }
 }

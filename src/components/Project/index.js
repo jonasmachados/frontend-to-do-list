@@ -7,6 +7,7 @@ import { BsCalendar2Plus } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 import ToDoModal from '../Modal/ToDoModal';
 import TaskModal from '../Modal/TaskModal';
+import Error404 from '../Errors/Error404';
 
 const Project = () => {
 
@@ -18,7 +19,8 @@ const Project = () => {
     const [showTaskModal, setShowTaskModal] = useState(false);
     const [showToDoModal, setShowToDoModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
-
+    const [project, setProject] = useState(null);
+    
     const formattedDate = moment(dateInitial).format('DD/MM/YYYY');
 
     const handleCloseTaskModal = () => setShowTaskModal(false);
@@ -42,11 +44,17 @@ const Project = () => {
             setName(response.data.name)
             setDateInitial(response.data.dateInitial)
             setListTasks(response.data.listTasks)
+            setProject(response.data);
             console.log((response.data.listTasks))
         }).catch(error => {
             console.log(error)
         })
     }, [id])
+
+    if (!project) {
+        console.log('No project found with the provided id');
+        return <Error404 message="Nenhum projeto encontrado com o id fornecido" />;
+    }
 
     return (
         <div className='container-project'>
